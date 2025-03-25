@@ -44,8 +44,7 @@
             "id": "system_prompt",
             "type": "input",
             "name": "System Prompt",
-            "description": "A prompt to give some context to the system. This is optional but highly recommended.",
-            "default_value": "Answer on user's language. Don't use any formatting"
+            "description": "A prompt to give some context to the system. This is optional but highly recommended."
         },
         {
             "id": "temperature",

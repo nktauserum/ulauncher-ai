@@ -34,7 +34,7 @@ class GPTExtension(Extension):
 
     def __init__(self):
         super(GPTExtension, self).__init__()
-        logger.info('GPT-3 extension started')
+        logger.info('AI extension started')
         self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
 
 
@@ -44,22 +44,15 @@ class KeywordQueryEventListener(EventListener):
     """
 
     def on_event(self, event, extension):
-        endpoint = "https://api.openai.com/v1/chat/completions"
+        endpoint = "https://openrouter.ai/api/v1/chat/completions"
 
         logger.info('Processing user preferences')
         # Get user preferences
         try:
             api_key = extension.preferences['api_key']
-            max_tokens = int(extension.preferences['max_tokens'])
-            frequency_penalty = float(
-                extension.preferences['frequency_penalty'])
-            presence_penalty = float(extension.preferences['presence_penalty'])
             temperature = float(extension.preferences['temperature'])
-            top_p = float(extension.preferences['top_p'])
             system_prompt = extension.preferences['system_prompt']
-            line_wrap = int(extension.preferences['line_wrap'])
             model = extension.preferences['model']
-        # pylint: disable=broad-except
         except Exception as err:
             logger.error('Failed to parse preferences: %s', str(err))
             return RenderResultListAction([

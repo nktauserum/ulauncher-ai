@@ -9,6 +9,12 @@
     },
     "preferences": [
         {
+            "id": "gpt_kw",
+            "type": "keyword",
+            "name": "Keyword",
+            "default_value": "ais"
+        },
+        {
             "id": "api_key",
             "type": "input",
             "name": "Openrouter API Key",

@@ -92,10 +92,6 @@ class KeywordQueryEventListener(EventListener):
                 }
             ],
             "temperature": temperature,
-            "max_tokens": max_tokens,
-            "top_p": top_p,
-            "frequency_penalty": frequency_penalty,
-            "presence_penalty": presence_penalty,
             "model": model,
         }
         body = json.dumps(body)

@@ -1,10 +1,17 @@
-# [ULauncher](https://ulauncher.io/) AI Extension
+# Ulauncher AI Extension
+[*Скачать ULauncher*](https://ulauncher.io/)
 
-This extension enables you to use ChatGPT custom system prompts to create your own custom assistant
+Это расширение позволяет вам общаться с нейросетью прямо из окна Ulauncher. Используются бесплатные модели:
+- Gemma 3
+- DeepSeek V3
+- Mistral Small 3.1
+- Gemini Flash Lite 2.0 Preview
 
-![Screenshot](images/screenshot.png)
+Чтобы получить API-ключ для доступа ко всему этому счастью, вам достаточно зарегистрироваться на [openrouter.ai](https://openrouter.ai/). Регистрация также бесплатна.
 
 Forked from [other repository](https://github.com/seofernando25/ulauncher-gpt).
+
+![Screenshot](images/screenshot.png)
 
 ## Install
 

@@ -12,7 +12,6 @@ import json
 logger = logging.getLogger(__name__)
 EXTENSION_ICON = 'images/icon.png'
 
-
 def wrap_text(text, max_w):
     words = text.split()
     lines = []
@@ -53,6 +52,7 @@ class KeywordQueryEventListener(EventListener):
             temperature = float(extension.preferences['temperature'])
             system_prompt = extension.preferences['system_prompt']
             model = extension.preferences['model']
+            log_path = extension.preferences['log_path']
         except Exception as err:
             logger.error('Failed to parse preferences: %s', str(err))
             return RenderResultListAction([
@@ -61,6 +61,16 @@ class KeywordQueryEventListener(EventListener):
                                     str(err),
                                     on_enter=CopyToClipboardAction(str(err)))
             ])
+
+        if log_path:
+            log_file_path = os.path.abspath(log_path)
+            file_handler = logging.FileHandler(log_file_path)
+
+            formatter = logging.Formatter('[%(levelname)s %(asctime)s] %(message)s')
+            file_handler.setFormatter(formatter)
+
+            logger.addHandler(file_handler)
+            logger.setLevel(logging.DEBUG)  
 
         # Get search term
         search_term = event.get_argument()

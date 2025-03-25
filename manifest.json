@@ -53,6 +53,12 @@
             "name": "Temperature",
             "description": "Lower = Predictable text | Higher = Surprising/Random text (0-1)",
             "default_value": "0.7"
+        },
+        {
+            "id": "log_path",
+            "type": "input",
+            "name": "Log path",
+            "description": "Path for logger. Leave blank on production"
         }
     ]
 }

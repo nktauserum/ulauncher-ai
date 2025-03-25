@@ -17,7 +17,7 @@ def wrap_text(text, max_w):
     lines = []
     current_line = ''
     for word in words:
-        if len(current_line + word) <= max_w:
+        if len(current_line + word) <= int(max_w):
             current_line += ' ' + word
         else:
             lines.append(current_line.strip())
@@ -51,8 +51,8 @@ class KeywordQueryEventListener(EventListener):
             api_key = extension.preferences['api_key']
             temperature = float(extension.preferences['temperature'])
             system_prompt = extension.preferences['system_prompt']
+            line_wrap = extension.preferences['line_wrap']
             model = extension.preferences['model']
-            log_path = extension.preferences['log_path']
         except Exception as err:
             logger.error('Failed to parse preferences: %s', str(err))
             return RenderResultListAction([
@@ -61,16 +61,6 @@ class KeywordQueryEventListener(EventListener):
                                     str(err),
                                     on_enter=CopyToClipboardAction(str(err)))
             ])
-
-        if log_path:
-            log_file_path = os.path.abspath(log_path)
-            file_handler = logging.FileHandler(log_file_path)
-
-            formatter = logging.Formatter('[%(levelname)s %(asctime)s] %(message)s')
-            file_handler.setFormatter(formatter)
-
-            logger.addHandler(file_handler)
-            logger.setLevel(logging.DEBUG)  
 
         # Get search term
         search_term = event.get_argument()
@@ -98,7 +88,7 @@ class KeywordQueryEventListener(EventListener):
                 },
                 {
                     "role": "user",
-                    "content": search_term
+                    "content": str(search_term)
                 }
             ],
             "temperature": temperature,
@@ -136,7 +126,7 @@ class KeywordQueryEventListener(EventListener):
             choices = response['choices']
         # pylint: disable=broad-except
         except Exception as err:
-            logger.error('Failed to parse response: %s', str(response))
+            logger.error('Failed to parse choices: %s', str(response))
             errMsg = "Unknown error, please check logs for more info"
             try:
                 errMsg = response['error']['message']
@@ -145,35 +135,38 @@ class KeywordQueryEventListener(EventListener):
 
             return RenderResultListAction([
                 ExtensionResultItem(icon=EXTENSION_ICON,
-                                    name='Failed to parse response: ' +
+                                    name='Failed to parse choices: ' +
                                     errMsg,
                                     on_enter=CopyToClipboardAction(str(errMsg)))
             ])
 
         items: list[ExtensionResultItem] = []
+        result = []
         try:
             for choice in choices:
                 message = choice['message']['content']
                 message = wrap_text(message, line_wrap)
 
-                items.append(ExtensionResultItem(icon=EXTENSION_ICON, name="Assistant", description=message,
+                result.append(message)
+
+                items.append(ExtensionResultItem(icon=EXTENSION_ICON, name=response["model"], description=message,
                                                  on_enter=CopyToClipboardAction(message)))
         # pylint: disable=broad-except
         except Exception as err:
-            logger.error('Failed to parse response: %s', str(response))
+            logger.error('Failed to parse content - %s: %s', err, str(response))
             return RenderResultListAction([
                 ExtensionResultItem(icon=EXTENSION_ICON,
-                                    name='Failed to parse response: ' +
+                                    name='Failed to parse content: ' +
                                     str(response),
                                     on_enter=CopyToClipboardAction(str(err)))
             ])
 
         try:
-            item_string = ' | '.join([item.description for item in items])
+            item_string = ' | '.join([str(item) for item in result])
             logger.info("Results: %s", item_string)
         except Exception as err:
             logger.error('Failed to log results: %s', str(err))
-            logger.error('Results: %s', str(items))
+            logger.error('Results: %s', str(result))
 
         return RenderResultListAction(items)
 

@@ -25,7 +25,7 @@
             "id": "model",
             "type": "select",
             "name": "Model",
-            "default_value": "gemini",
+            "default_value": "google/gemma-3-27b-it:free",
             "options": [
                 {"text": "Google: Gemma 3 27B", "value": "google/gemma-3-27b-it:free"},
                 {"text": "DeepSeek: DeepSeek V3 0324", "value": "deepseek/deepseek-chat-v3-0324:free"},
@@ -53,12 +53,6 @@
             "name": "Temperature",
             "description": "Lower = Predictable text | Higher = Surprising/Random text (0-1)",
             "default_value": "0.7"
-        },
-        {
-            "id": "log_path",
-            "type": "input",
-            "name": "Log path",
-            "description": "Path for logger. Leave blank on production"
         }
     ]
 }

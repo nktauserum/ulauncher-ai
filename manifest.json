@@ -5,7 +5,7 @@
     "developer_name": "nktauserum",
     "icon": "images/icon.png",
     "options": {
-        "query_debounce": 1.1
+        "query_debounce": 1
     },
     "preferences": [
         {

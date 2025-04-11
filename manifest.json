@@ -5,7 +5,7 @@
     "developer_name": "nktauserum",
     "icon": "images/icon.png",
     "options": {
-        "query_debounce": 2
+        "query_debounce": 1
     },
     "preferences": [
         {
@@ -23,14 +23,16 @@
         },
         {
             "id": "model",
-            "type": "select",
+            "type": "input",
             "name": "Model",
-            "default_value": "google/gemma-3-27b-it:free",
+            "default_value": "google/gemini-2.0-flash-exp:free",
+            "description": "Select the model you want to use. You can find the list of models here: https://openrouter.ai/models",
             "options": [
-                {"text": "Google: Gemma 3 27B", "value": "google/gemma-3-27b-it:free"},
+                {"text": "Google: Gemini 2.0 Flash(Reasoning)", "value": "google/gemini-2.0-flash-thinking-exp:free"},
                 {"text": "DeepSeek: DeepSeek V3 0324", "value": "deepseek/deepseek-chat-v3-0324:free"},
-                {"text": "Mistral: Mistral Small 3.1 24B", "value": "mistralai/mistral-small-3.1-24b-instruct:free"},
-                {"text": "Google: Gemini Flash Lite 2.0 Preview", "value": "google/gemini-2.0-flash-lite-preview-02-05:free"}
+                {"text": "Google: Gemini 2.0 Flash", "value": "google/gemini-2.0-flash-exp:free"} ,
+                {"text": "Google: Gemini 2.5 Pro", "value": "google/gemini-2.5-pro-exp-03-25:free"}
+
             ]
         },
         {
